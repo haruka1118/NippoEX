@@ -12,15 +12,13 @@ from urls import urls
 db = SqliteDatabase("articles.db")
 
 
-class BaseModel(Model):
-    class Meta:
-        database = db
-
-
-class ArticleHash(BaseModel):
+class ArticleHash(Model):
     url = CharField(unique=True)
     hash = CharField()
     date = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = db
 
 
 # データベースとテーブルの作成
@@ -68,14 +66,14 @@ def fetch_articles(url):
     if "kyodo" in url:
         # 全国ニュース
         # 広告要素を除外
-        ads = soup.select('aside.side, .news-box')
+        ads = soup.select("aside.side, .news-box")
         for ad in ads:
             ad.decompose()
         articles = soup.select("ul.article-list li")
     else:
         # 県内ニュース
         # 広告要素を除外
-        ads = soup.select('aside.side, .news-box')
+        ads = soup.select("aside.side, .news-box")
         for ad in ads:
             ad.decompose()
         articles = soup.select("div.article-list-right-box ul.article-list li.item")
