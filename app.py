@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 import hashlib
 import requests
 from flask import Flask, render_template
@@ -29,6 +30,7 @@ app = Flask(__name__)
 
 
 # LINE Notifyのトークン
+load_dotenv()
 LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
 
 
