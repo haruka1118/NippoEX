@@ -39,12 +39,12 @@ def send_line_notify(message, image_url=None):
         "Authorization": f"Bearer {LINE_NOTIFY_TOKEN}",
         "Content-Type": "application/x-www-form-urlencoded",
     }
-    payload = {"message": message}
+    line_message = {"message": message}
     if image_url:
-        payload["imageThumbnail"] = image_url
-        payload["imageFullsize"] = image_url
+        line_message["imageThumbnail"] = image_url
+        line_message["imageFullsize"] = image_url
 
-    response = requests.post("https://notify-api.line.me/api/notify", headers=headers, data=payload)
+    response = requests.post("https://notify-api.line.me/api/notify", headers=headers, data=line_message)
     return response
 
 
@@ -91,17 +91,16 @@ def fetch_articles(url):
                 else title_tag.text.strip()
             )
         else:
-            title_tag = article.find("div", class_="headline")
-            title = title_tag.text.strip() if title_tag else "タイトル不明"
+            title = "タイトル不明"
 
         # リンクの取得
         link_tag = article.find("a", class_="article-list-anchor")
-        link = link_tag["href"] if link_tag else "#"
+        link = link_tag.get("href", "#")
         full_link = link if link.startswith("http") else f"https://www.iwate-np.co.jp{link}"
 
         # 画像の取得
         img_tag = article.find("img", class_="lazyload")
-        img = img_tag["data-src"] if img_tag else None
+        img = img_tag.get("data-src")
 
         # 日付の取得
         date_tag = article.find("span", class_="date")
@@ -178,7 +177,7 @@ def scheduled_task():
         content = article["content"]
         date = article["date"]
 
-        message = f"{date}\n【{title}】\n\n{content}\n\n記事全文>>{link}"
+        message = f"{date}【{main_category}】({subcategory})\n◆{title}\n\n{content}\n\n記事全文>>{link}"
 
         send_line_notify(message, image)
 
