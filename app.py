@@ -84,14 +84,10 @@ def fetch_articles(url):
     for article in articles:
         # タイトルの取得
         title_tag = article.find("div", class_="headline")
+        title = "タイトル不明"
         if title_tag:
-            title = (
-                title_tag.find("span", class_="full").text.strip()
-                if title_tag.find("span", class_="full")
-                else title_tag.text.strip()
-            )
-        else:
-            title = "タイトル不明"
+            title_span = title_tag.find("span", class_="full")
+            title = title_span.text.strip() if title_span else title_tag.text.strip()
 
         # リンクの取得
         link_tag = article.find("a", class_="article-list-anchor")
