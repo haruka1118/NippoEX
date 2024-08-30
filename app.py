@@ -180,9 +180,9 @@ def scheduled_task():
 
 
 # スケジューラの設定
-scheduler = BackgroundScheduler()
-scheduler.add_job(scheduled_task, "interval", minutes=5)
-scheduler.start()
+# scheduler = BackgroundScheduler()
+# scheduler.add_job(scheduled_task, "interval", minutes=5)
+# scheduler.start()
 
 
 @app.route("/")
