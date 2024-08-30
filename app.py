@@ -5,7 +5,7 @@ import requests
 from flask import Flask, render_template
 from bs4 import BeautifulSoup
 from apscheduler.schedulers.background import BackgroundScheduler
-from peewee import Model, CharField, DateTimeField, SqliteDatabase
+from peewee import Model, CharField, DateTimeField, SqliteDatabase, TextField
 import datetime
 from urls import urls
 
@@ -17,6 +17,9 @@ class db_ArticleHash(Model):
     url = CharField(unique=True)
     hash = CharField()
     date = DateTimeField(default=datetime.datetime.now)
+    title = CharField()
+    content = TextField()
+    img = CharField()
 
     class Meta:
         database = db
@@ -104,7 +107,9 @@ def fetch_articles(url):
 
         # 記事内容の取得
         content = fetch_article_content(full_link)
-        hash_value = hashlib.md5(content.encode("utf-8")).hexdigest()
+
+        # URLの最後から4番目、3番目、2番目、1番目の部分を取得し、ハッシュ化
+        combined_parts, hash_value = get_and_hash_combined_parts(full_link)
 
         article_list.append(
             {
@@ -120,51 +125,64 @@ def fetch_articles(url):
     return article_list
 
 
-def load_hashes():
-    hashes = {}
-    for article_hash in db_ArticleHash.select():
-        hashes[article_hash.url] = article_hash.hash
-    return hashes
+def get_and_hash_combined_parts(url):
+    # URLを'/'で分割してリストにする
+    url_parts = url.rstrip("/").split("/")
 
+    # ハッシュ化する部分を格納するリスト
+    parts_to_hash = []
 
-def save_hashes(hashes):
-    with db.atomic():
-        for url, hash_value in hashes.items():
-            db_ArticleHash.insert(url=url, hash=hash_value).on_conflict(
-                conflict_target=[db_ArticleHash.url],
-                update={db_ArticleHash.hash: hash_value}
-            ).execute()
+    # URLが十分に長いか確認
+    if len(url_parts) >= 4:
+        # 最後から4番目、3番目、2番目、1番目の部分を取り出す
+        for i in range(4, 0, -1):
+            if len(url_parts) >= i:
+                parts_to_hash.append(url_parts[-i])
+
+    # 取得した部分をひとつにまとめる
+    combined_parts = "/".join(parts_to_hash)
+
+    # ひとつにまとめた部分をハッシュ化する
+    hash_value = hashlib.md5(combined_parts.encode("utf-8")).hexdigest()
+
+    return combined_parts, hash_value
 
 
 def check_for_updates(articles):
-    previous_hashes = load_hashes()
-    new_hashes = {}
     new_articles = []
 
     for article in articles:
         url = article["link"]
         current_hash = article["hash"]
 
-        if url not in previous_hashes or previous_hashes[url] != current_hash:
+        # データベース内でハッシュ値を確認
+        db_article = db_ArticleHash.get_or_none(db_ArticleHash.url == url)
+
+        if db_article is None or db_article.hash != current_hash:
             new_articles.append(article)
 
-        new_hashes[url] = current_hash
-
-    save_hashes(new_hashes)
+            # 新しいハッシュ値をデータベースに保存
+            db_ArticleHash.insert(
+                url=url,
+                hash=current_hash,
+                title=article["title"],
+                content=article["content"],
+                img=article["image"],
+                date=datetime.datetime.now(),
+            ).on_conflict(
+                conflict_target=[db_ArticleHash.url], update={db_ArticleHash.hash: current_hash}
+            ).execute()
 
     return new_articles
 
 
 def scheduled_task():
-    all_articles = {}
     updated_articles = []
 
     for main_category, subcategories in urls.items():
-        all_articles[main_category] = {}
         for subcategory, url in subcategories:
             articles = fetch_articles(url)
             new_articles = check_for_updates(articles)
-            all_articles[main_category][subcategory] = articles
             updated_articles.extend(new_articles)
 
     for article in updated_articles:
