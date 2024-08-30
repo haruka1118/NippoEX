@@ -131,7 +131,8 @@ def save_hashes(hashes):
     with db.atomic():
         for url, hash_value in hashes.items():
             db_ArticleHash.insert(url=url, hash=hash_value).on_conflict(
-                conflict_target=[db_ArticleHash.url], update={db_ArticleHash.hash: hash_value}
+                conflict_target=[db_ArticleHash.url],
+                update={db_ArticleHash.hash: hash_value}
             ).execute()
 
 
