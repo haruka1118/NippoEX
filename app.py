@@ -13,7 +13,7 @@ from urls import urls
 db = SqliteDatabase("articles.db")
 
 
-class ArticleHash(Model):
+class db_ArticleHash(Model):
     url = CharField(unique=True)
     hash = CharField()
     date = DateTimeField(default=datetime.datetime.now)
@@ -24,7 +24,7 @@ class ArticleHash(Model):
 
 # データベースとテーブルの作成
 db.connect()
-db.create_tables([ArticleHash])
+db.create_tables([db_ArticleHash])
 
 app = Flask(__name__)
 
@@ -122,7 +122,7 @@ def fetch_articles(url):
 
 def load_hashes():
     hashes = {}
-    for article_hash in ArticleHash.select():
+    for article_hash in db_ArticleHash.select():
         hashes[article_hash.url] = article_hash.hash
     return hashes
 
@@ -130,8 +130,8 @@ def load_hashes():
 def save_hashes(hashes):
     with db.atomic():
         for url, hash_value in hashes.items():
-            ArticleHash.insert(url=url, hash=hash_value).on_conflict(
-                conflict_target=[ArticleHash.url], update={ArticleHash.hash: hash_value}
+            db_ArticleHash.insert(url=url, hash=hash_value).on_conflict(
+                conflict_target=[db_ArticleHash.url], update={db_ArticleHash.hash: hash_value}
             ).execute()
 
 
