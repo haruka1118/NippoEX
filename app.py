@@ -180,9 +180,9 @@ def scheduled_task():
 
 
 # スケジューラの設定
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(scheduled_task, "interval", minutes=5)
-# scheduler.start()
+scheduler = BackgroundScheduler()
+scheduler.add_job(scheduled_task, "interval", minutes=5)
+scheduler.start()
 
 
 @app.route("/")
@@ -199,4 +199,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
