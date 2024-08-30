@@ -1,7 +1,5 @@
 .venv/
 .env
-kennai.html
-zenkoku.html
 __pycache__/
 .vscode/
-
+ignore/
