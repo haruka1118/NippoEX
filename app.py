@@ -64,7 +64,7 @@ def fetch_articles(url, main_category, subcategory):
 
         # 日付の取得
         date_tag = article.find("span", class_="date")
-        date = date_tag.text.strip() if date_tag else "日付不明"
+        date_nippo = date_tag.text.strip() if date_tag else "日付不明"
 
         # 記事内容の取得
         content = fetch_article_content(full_link)
@@ -79,7 +79,7 @@ def fetch_articles(url, main_category, subcategory):
                 "image": img,
                 "content": content,
                 "hash": hash_value,
-                "date": date,
+                "date_nippo": date_nippo,
                 "main_category": main_category,
                 "subcategory": subcategory,
             }
@@ -108,7 +108,8 @@ def check_for_updates(articles):
                 title=article["title"],
                 content=article["content"],
                 img=article["image"],
-                date=datetime.datetime.now(),
+                date_now=datetime.datetime.now(),
+                date_nippo=article["date_nippo"],
                 main_category=article["main_category"],
                 subcategory=article["subcategory"],
             ).on_conflict(
@@ -132,9 +133,9 @@ def scheduled_task():
         link = article["link"]
         image = article["image"]
         content = article["content"]
-        date = article["date"]
+        date_nippo = article["date_nippo"]
 
-        message = f"{date}【{article['main_category']}】({article['subcategory']})\n◆{title}\n\n{content}\n\n記事全文>>{link}"
+        message = f"{date_nippo}【{article['main_category']}】({article['subcategory']})\n◆{title}\n\n{content}\n\n記事全文>>{link}"
 
         send_line_notify(message, image)
 
@@ -157,7 +158,7 @@ def index():
                 db_ArticleHash.select()
                 .where(db_ArticleHash.main_category == main_category)
                 .where(db_ArticleHash.subcategory == subcategory)
-                .order_by(db_ArticleHash.date.desc())
+                .order_by(db_ArticleHash.date_now.desc())
             )
 
             # データをリストに変換
@@ -167,7 +168,9 @@ def index():
                     "link": article.url,
                     "image": article.img,
                     "content": article.content,
-                    "date": article.date.strftime("%Y-%m-%d"),
+                    "date_now": article.date_now.strftime("%Y-%m-%d %H:%M"),
+                    "date_nippo": article.date_nippo,
+
                 }
                 for article in articles
             ]

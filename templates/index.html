@@ -23,7 +23,7 @@
         {% for article in articles %}
         <li>
             <h4><a href="{{ article.link }}">{{ article.title }}</a></h4>
-            <p>{{ article.date }}</p> <!-- 日付を表示 -->
+            <p>{{ article.date_now }}</p> <!-- 日付を表示 -->
             <img src="{{ article.image }}" alt="{{ article.title }}">
             <p>{{ article.content }}</p>
         </li>

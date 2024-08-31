@@ -7,13 +7,14 @@ db = SqliteDatabase("articles.db")
 
 class db_ArticleHash(Model):
     url = CharField(unique=True)
-    hash = CharField()
-    date = DateTimeField(default=datetime.datetime.now)
-    title = CharField()
-    content = TextField()
-    img = CharField()
+    date_now = DateTimeField(default=datetime.datetime.now)
+    date_nippo = DateTimeField()
     main_category = CharField()
     subcategory = CharField()
+    title = CharField()
+    img = CharField()
+    content = TextField()
+    hash = CharField()
 
     class Meta:
         database = db
