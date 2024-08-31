@@ -12,7 +12,9 @@
 </head>
 
 <body>
-    <h1>日報EX</h1>
+    <nav class="head">
+        <span class="service-name">日報EX</span>
+    </nav>
     {% for main_category, subcategories in all_articles.items() %}
     <h2>{{ main_category }}</h2>
     {% for subcategory, articles in subcategories.items() %}

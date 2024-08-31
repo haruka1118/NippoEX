@@ -4,6 +4,14 @@ body {
     font-family: "Noto sans JP", "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
 }
 
+.head{
+    width: 100%;
+    
+}
+.service-name{
+
+}
+
 h2 {
     background-color: #e1e1e1;
 }
