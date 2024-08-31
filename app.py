@@ -5,29 +5,10 @@ import requests
 from flask import Flask, render_template
 from bs4 import BeautifulSoup
 from apscheduler.schedulers.background import BackgroundScheduler
-from peewee import Model, CharField, DateTimeField, SqliteDatabase, TextField
 import datetime
 from urls import urls
+from db import db_ArticleHash
 
-# SQLiteデータベースの設定
-db = SqliteDatabase("articles.db")
-
-
-class db_ArticleHash(Model):
-    url = CharField(unique=True)
-    hash = CharField()
-    date = DateTimeField(default=datetime.datetime.now)
-    title = CharField()
-    content = TextField()
-    img = CharField()
-
-    class Meta:
-        database = db
-
-
-# データベースとテーブルの作成
-db.connect()
-db.create_tables([db_ArticleHash])
 
 app = Flask(__name__)
 
