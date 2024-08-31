@@ -1,38 +1,19 @@
+import datetime
 import os
-from dotenv import load_dotenv
 import hashlib
 import requests
-from flask import Flask, render_template
-from bs4 import BeautifulSoup
 from apscheduler.schedulers.background import BackgroundScheduler
-import datetime
-from urls import urls
+from bs4 import BeautifulSoup
 from db import db_ArticleHash
+from flask import Flask, render_template
+from line_notify import send_line_notify
+from urls import urls
 
 
 app = Flask(__name__)
 
 
-# LINE Notifyのトークン
-load_dotenv()
-LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
-
-
-def send_line_notify(message, image_url=None):
-    headers = {
-        "Authorization": f"Bearer {LINE_NOTIFY_TOKEN}",
-        "Content-Type": "application/x-www-form-urlencoded",
-    }
-    line_message = {"message": message}
-    # if image_url:
-    #     line_message["imageThumbnail"] = image_url
-    #     line_message["imageFullsize"] = image_url
-
-    response = requests.post("https://notify-api.line.me/api/notify", headers=headers, data=line_message)
-    return response
-
-
-# 記事本文を取得
+# 1)記事ページ(article_url)から記事本文を取得
 def fetch_article_content(article_url):
     response = requests.get(article_url)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -45,8 +26,8 @@ def fetch_article_content(article_url):
     return "本文を取得できませんでした。"
 
 
-# 中カテゴリページから情報を取得
-def fetch_articles(url):
+# 2)中カテゴリページ(url)から情報を取得
+def fetch_articles(url, main_category, subcategory):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
 
@@ -99,6 +80,8 @@ def fetch_articles(url):
                 "content": content,
                 "hash": hash_value,
                 "date": date,
+                "main_category": main_category,
+                "subcategory": subcategory,
             }
         )
 
@@ -126,6 +109,8 @@ def check_for_updates(articles):
                 content=article["content"],
                 img=article["image"],
                 date=datetime.datetime.now(),
+                main_category=article["main_category"],
+                subcategory=article["subcategory"],
             ).on_conflict(
                 conflict_target=[db_ArticleHash.url], update={db_ArticleHash.hash: current_hash}
             ).execute()
@@ -138,7 +123,7 @@ def scheduled_task():
 
     for main_category, subcategories in urls.items():
         for subcategory, url in subcategories:
-            articles = fetch_articles(url)
+            articles = fetch_articles(url, main_category, subcategory)
             new_articles = check_for_updates(articles)
             updated_articles.extend(new_articles)
 
@@ -149,7 +134,7 @@ def scheduled_task():
         content = article["content"]
         date = article["date"]
 
-        message = f"{date}【{main_category}】({subcategory})\n◆{title}\n\n{content}\n\n記事全文>>{link}"
+        message = f"{date}【{article['main_category']}】({article['subcategory']})\n◆{title}\n\n{content}\n\n記事全文>>{link}"
 
         send_line_notify(message, image)
 
@@ -167,8 +152,26 @@ def index():
     for main_category, subcategories in urls.items():
         all_articles[main_category] = {}
         for subcategory, url in subcategories:
-            articles = fetch_articles(url)
-            all_articles[main_category][subcategory] = articles
+            # データベースから記事を取得
+            articles = (
+                db_ArticleHash.select()
+                .where(db_ArticleHash.main_category == main_category)
+                .where(db_ArticleHash.subcategory == subcategory)
+                .order_by(db_ArticleHash.date.desc())
+            )
+
+            # データをリストに変換
+            article_list = [
+                {
+                    "title": article.title,
+                    "link": article.url,
+                    "image": article.img,
+                    "content": article.content,
+                    "date": article.date.strftime("%Y-%m-%d"),
+                }
+                for article in articles
+            ]
+            all_articles[main_category][subcategory] = article_list
 
     return render_template("index.html", all_articles=all_articles)
 

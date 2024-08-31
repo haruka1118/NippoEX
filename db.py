@@ -12,6 +12,8 @@ class db_ArticleHash(Model):
     title = CharField()
     content = TextField()
     img = CharField()
+    main_category = CharField()
+    subcategory = CharField()
 
     class Meta:
         database = db
@@ -20,3 +22,5 @@ class db_ArticleHash(Model):
 # データベースとテーブルの作成
 db.connect()
 db.create_tables([db_ArticleHash])
+
+
