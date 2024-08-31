@@ -43,14 +43,15 @@ def send_line_notify(message, image_url=None):
         "Content-Type": "application/x-www-form-urlencoded",
     }
     line_message = {"message": message}
-    if image_url:
-        line_message["imageThumbnail"] = image_url
-        line_message["imageFullsize"] = image_url
+    # if image_url:
+    #     line_message["imageThumbnail"] = image_url
+    #     line_message["imageFullsize"] = image_url
 
     response = requests.post("https://notify-api.line.me/api/notify", headers=headers, data=line_message)
     return response
 
 
+# 記事本文を取得
 def fetch_article_content(article_url):
     response = requests.get(article_url)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -63,21 +64,19 @@ def fetch_article_content(article_url):
     return "本文を取得できませんでした。"
 
 
+# 中カテゴリページから情報を取得
 def fetch_articles(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # ニュースの種類によって異なるセレクタを使用
     if "kyodo" in url:
-        # 全国ニュース
-        # 広告要素を除外
+        # 全国ニュース(広告除外)
         ads = soup.select("aside.side, .news-box")
         for ad in ads:
             ad.decompose()
         articles = soup.select("ul.article-list li")
     else:
-        # 県内ニュース
-        # 広告要素を除外
+        # 県内ニュース(広告除外)
         ads = soup.select("aside.side, .news-box")
         for ad in ads:
             ad.decompose()
@@ -126,18 +125,18 @@ def fetch_articles(url):
 
 
 def get_and_hash_combined_parts(url):
-    # URLを'/'で分割してリストにする
+    # URLを"/"で分割してリストにする
     url_parts = url.rstrip("/").split("/")
 
     # ハッシュ化する部分を格納するリスト
     parts_to_hash = []
 
-    # URLが十分に長いか確認
-    if len(url_parts) >= 4:
-        # 最後から4番目、3番目、2番目、1番目の部分を取り出す
-        for i in range(4, 0, -1):
-            if len(url_parts) >= i:
-                parts_to_hash.append(url_parts[-i])
+    # # URLが十分に長いか確認
+    # if len(url_parts) >= 4:
+    # 最後から4番目、3番目、2番目、1番目の部分を取り出す
+    for i in range(4, 0, -1):
+        if len(url_parts) >= i:
+            parts_to_hash.append(url_parts[-i])
 
     # 取得した部分をひとつにまとめる
     combined_parts = "/".join(parts_to_hash)
