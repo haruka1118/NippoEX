@@ -182,7 +182,3 @@ def index():
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))  # dotenvにportがあればそれ、なければ5000
     app.run(host="0.0.0.0", port=port)  # どこからでもこのプログラムにアクセスできるように
-
-# 定期スケジュールで記事の情報もDBにいれる
-# DBからLPにだす
-# LPは降順(記事の取得日時)
