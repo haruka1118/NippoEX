@@ -1,34 +1,26 @@
 import requests
-import time
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
-# アクセスしたいURLを指定します
 def dont_sleep():
     URL = "https://nippoex.onrender.com"
 
-    # リクエストを送る間隔（秒）
-    INTERVAL = 60 * 10  # 10分
-
-    # 最大リトライ回数
-    MAX_RETRIES = 5
-
-    retries = 0
-
-    while retries < MAX_RETRIES:
-        try:
-            # URLにリクエストを送る
-            response = requests.get(URL)
-            print(f"Response Status Code: {response.status_code}")
-            retries = 0  # 成功したらリトライカウントをリセット
-        except Exception as e:
-            print(f"Error: {e}")
-            retries += 1  # エラーが発生したらリトライカウントを増やす
-
-        # 指定した間隔だけ待つ
-        time.sleep(INTERVAL)
-
-    # 最大リトライ回数を超えた場合のメッセージ
-    print("Max retries exceeded, stopping the script.")
+    try:
+        # URLにリクエストを送る
+        response = requests.get(URL)
+        print(f"Response Status Code: {response.status_code}")
+    except Exception as e:
+        print(f"Error: {e}")
 
 
-dont_sleep()
+# スケジューラの設定
+scheduler = BackgroundScheduler()
+scheduler.add_job(dont_sleep, "interval", minutes=10)  # 10分ごとに実行
+scheduler.start()
+
+# メインの処理をループで待機（またはFlaskアプリの場合、app.run()などを実行）
+try:
+    while True:
+        pass  # 無限ループでプロセスを維持（通常のWebアプリであればapp.run()などに置き換え）
+except (KeyboardInterrupt, SystemExit):
+    scheduler.shutdown()  # プログラム終了時にスケジューラを停止

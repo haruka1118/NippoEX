@@ -8,7 +8,6 @@ from db import db_ArticleHash
 from flask import Flask, render_template
 from line_notify import send_line_notify
 from urls import urls
-from threading import Thread
 from render_dont_sleep import dont_sleep
 
 app = Flask(__name__)
@@ -144,6 +143,7 @@ def scheduled_task():
 # スケジューラの設定
 scheduler = BackgroundScheduler()
 scheduler.add_job(scheduled_task, "interval", minutes=3)
+scheduler.add_job(dont_sleep, "interval", minutes=10)
 scheduler.start()
 
 
@@ -171,7 +171,6 @@ def index():
                     "content": article.content,
                     "date_now": article.date_now.strftime("%Y-%m-%d %H:%M"),
                     "date_nippo": article.date_nippo,
-
                 }
                 for article in articles
             ]
@@ -181,8 +180,6 @@ def index():
 
 
 if __name__ == "__main__":
-    Thread(target=dont_sleep, daemon=True).start()
-
     port = int(os.getenv("PORT", 5000))  # dotenvにportがあればそれ、なければ5000
     app.run(host="0.0.0.0", port=port)  # どこからでもこのプログラムにアクセスできるように
 
