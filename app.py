@@ -8,7 +8,6 @@ from db import db_ArticleHash
 from flask import Flask, render_template
 from line_notify import send_line_notify
 from urls import urls
-from render_dont_sleep import dont_sleep
 
 app = Flask(__name__)
 
@@ -138,6 +137,15 @@ def scheduled_task():
         message = f"{date_nippo}【{article['main_category']}】({article['subcategory']})\n◆{title}\n\n{content}\n\n記事全文>>{link}"
 
         send_line_notify(message, image)
+
+
+def dont_sleep():
+    URL = "https://nippoex.onrender.com"
+    try:
+        response = requests.get(URL)
+        print(f"Response Status Code: {response.status_code}")
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 # スケジューラの設定
