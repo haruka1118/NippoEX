@@ -113,7 +113,17 @@ def check_for_updates(articles):
                 main_category=article["main_category"],
                 subcategory=article["subcategory"],
             ).on_conflict(
-                conflict_target=[db_ArticleHash.url], update={db_ArticleHash.hash: current_hash}
+                conflict_target=[db_ArticleHash.url],
+                update={
+                    db_ArticleHash.hash: current_hash,
+                    db_ArticleHash.title: article["title"],
+                    db_ArticleHash.content: article["content"],
+                    db_ArticleHash.img: article["image"],
+                    db_ArticleHash.date_now: datetime.datetime.now(),
+                    db_ArticleHash.date_nippo: article["date_nippo"],
+                    db_ArticleHash.main_category: article["main_category"],
+                    db_ArticleHash.subcategory: article["subcategory"],
+                },
             ).execute()
 
     return new_articles
@@ -170,7 +180,6 @@ def index():
                     "content": article.content,
                     "date_now": article.date_now.strftime("%Y-%m-%d %H:%M"),
                     "date_nippo": article.date_nippo,
-
                 }
                 for article in articles
             ]
