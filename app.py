@@ -5,7 +5,7 @@ import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 from bs4 import BeautifulSoup
 from db import db_ArticleHash
-from flask import Flask, render_template
+from flask import Flask, render_template, send_file
 from line_notify import send_line_notify
 from urls import urls
 
@@ -177,6 +177,11 @@ def index():
             all_articles[main_category][subcategory] = article_list
 
     return render_template("index.html", all_articles=all_articles)
+
+
+@app.route("/download-db")
+def download_db():
+    return send_file("articles.db", as_attachment=True)
 
 
 if __name__ == "__main__":
