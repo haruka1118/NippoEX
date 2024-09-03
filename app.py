@@ -132,11 +132,11 @@ def check_for_updates(articles):
 def scheduled_task():
     updated_articles = []
 
-    for main_category, subcategories in urls.items():
-        for subcategory, url in subcategories:
-            articles = fetch_articles(url, main_category, subcategory)
+    for main_category, subcategories in urls.items():  # urls.pyから「main_category」定義
+        for subcategory, url in subcategories:  # urls.pyから「subcategory, url」定義
+            articles = fetch_articles(url, main_category, subcategory)  # 「articles」定義
             new_articles = check_for_updates(articles)
-            updated_articles.extend(new_articles)
+            updated_articles.extend(new_articles)  # フラットなリストになるように追加はextend()
 
     for article in updated_articles:
         title = article["title"]
@@ -151,12 +151,12 @@ def scheduled_task():
 
 
 # スケジューラの設定
-scheduler = BackgroundScheduler()
-scheduler.add_job(scheduled_task, "interval", minutes=3)
-scheduler.start()
+scheduler = BackgroundScheduler()  # スケジューラーのインスタンスを作成
+scheduler.add_job(scheduled_task, "interval", minutes=3)  # スケジュールを設定
+scheduler.start()  # スケジューラーの開始
 
 
-@app.route("/")
+@app.route("/")  # URLと以下のPython関数を結びつける
 def index():
     all_articles = {}
 
@@ -193,6 +193,6 @@ def download_db():
     return send_file("articles.db", as_attachment=True)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # このスクリプトが直接実行されたときにだけ、この条件が True になるという意味
     port = int(os.getenv("PORT", 5000))  # dotenvにportがあればそれ、なければ5000
     app.run(host="0.0.0.0", port=port)  # どこからでもこのプログラムにアクセスできるように
