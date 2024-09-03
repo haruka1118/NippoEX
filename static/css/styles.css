@@ -24,6 +24,7 @@ body {
     background-color: white;
     top: 0;
     height: 100px;
+    overflow: hidden;
 }
 
 
@@ -53,9 +54,11 @@ body {
     width: 100%; 
 }
 
-.sub-category {
+
+.span-sub-category{
     background-color: #f2f2f2;
     width: 100%;
+    display: block;
 
 }
 
