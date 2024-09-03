@@ -12,9 +12,18 @@
 </head>
 
 <body>
-    <nav class="head">
-        <span class="service-name">日報EX</span>
-    </nav>
+    <header class="header">
+        <div class="header-logo">
+           <a href="https://nippoex.onrender.com/">
+                <img src="../static/日報EX.png" alt="日報EX" width="200px" height="auto" class="header-logo-img">
+            </a>
+        </div>
+        <div class="header-menu">
+            <a href="https://nippoex.onrender.com/">TOP</a>
+            <a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a>
+            <a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a>
+        </div>
+    </header>
     {% for main_category, subcategories in all_articles.items() %}
     <h2>{{ main_category }}</h2>
     {% for subcategory, articles in subcategories.items() %}
