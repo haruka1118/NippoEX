@@ -27,28 +27,31 @@
         </div>
     </nav>
 
-    <div class="main-category">
-        {% for main_category, subcategories in all_articles.items() %}
-        <h2>{{ main_category }}</h2>
-    </div>
+    <section class="section-article">
+        <div class="main-category">
+            {% for main_category, subcategories in all_articles.items() %}
+            <span class="span-main-category">{{ main_category }}</span>
+        </div>
 
-    <div class="sub-category">
-        {% for subcategory, articles in subcategories.items() %}
-        <h3>{{ subcategory }}</h3>
-    </div>
+        <div class="sub-category">
+            {% for subcategory, articles in subcategories.items() %}
+            <span class="span-sub-category">{{ subcategory }}</span>
+        </div>
 
-    <ul>
-        {% for article in articles %}
-        <li>
-            <h4><a href="{{ article.link }}">{{ article.title }}</a></h4>
-            <p>{{ article.date_now }}</p> <!-- 日付を表示 -->
-            <img src="{{ article.image }}" alt="{{ article.title }}">
-            <p>{{ article.content }}</p>
-        </li>
+        <div class="article">
+            {% for article in articles %}
+            <span class="article-title"><a href="{{ article.link }}">{{ article.title }}</a></span>
+            <span class="article-date">{{ article.date_now }}</span>
+            <div class="article-img-p">
+                <img src="{{ article.image }}" alt="{{ article.title }}">
+                <p class="article-content">{{ article.content }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
         {% endfor %}
-    </ul>
-    {% endfor %}
-    {% endfor %}
+        {% endfor %}
+    </section>
 </body>
 
 </html>
