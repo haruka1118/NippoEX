@@ -12,22 +12,31 @@
 </head>
 
 <body>
-    <header class="header">
+    <nav class="header">
         <div class="header-logo">
-           <a href="https://nippoex.onrender.com/">
-                <img src="../static/日報EX.png" alt="日報EX" width="200px" height="auto" class="header-logo-img">
+            <a href="https://nippoex.onrender.com/">
+                <img src="../static/日報EX.png" alt="日報EX" width="auto" height="150px" class="header-logo-img">
             </a>
         </div>
         <div class="header-menu">
-            <a href="https://nippoex.onrender.com/">TOP</a>
-            <a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a>
-            <a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a>
+            <ul class="header-menu-list">
+                <li><a href="https://nippoex.onrender.com/">TOP</a></li>
+                <li><a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a></li>
+                <li><a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a></li>
+            </ul>
         </div>
-    </header>
-    {% for main_category, subcategories in all_articles.items() %}
-    <h2>{{ main_category }}</h2>
-    {% for subcategory, articles in subcategories.items() %}
-    <h3>{{ subcategory }}</h3>
+    </nav>
+
+    <div class="main-category">
+        {% for main_category, subcategories in all_articles.items() %}
+        <h2>{{ main_category }}</h2>
+    </div>
+
+    <div class="sub-category">
+        {% for subcategory, articles in subcategories.items() %}
+        <h3>{{ subcategory }}</h3>
+    </div>
+
     <ul>
         {% for article in articles %}
         <li>
