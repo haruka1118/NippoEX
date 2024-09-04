@@ -169,6 +169,7 @@ def index():
                 .where(db_ArticleHash.main_category == main_category)
                 .where(db_ArticleHash.subcategory == subcategory)
                 .order_by(db_ArticleHash.date_now.desc())
+                .limit(5)
             )
 
             # データをリストに変換
