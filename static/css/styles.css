@@ -52,6 +52,7 @@ body {
     padding: 120px 20px 20px 20px;
     margin: 0 auto;
     width: 100%;
+    box-sizing: border-box;
 }
 
 
@@ -72,7 +73,7 @@ body {
     font-size: 1.2em;
     font-weight: 550;
     border-bottom: 1px solid transparent;
-    transition: border-color .25s,color .25s;
+    transition: border-color .25s, color .25s;
 }
 
 .article-title>a:hover {
@@ -96,12 +97,37 @@ body {
 .article-img-p {
     display: flex;
     align-items: flex-start;
-    border-bottom: 3px solid #d1d1d171;
+    border-bottom: 3px solid #f2f2f2;
     padding-bottom: 15px;
+    /* justify-content: space-between; */
 }
 
-.article-img-p>img {
-    width: 300px;
+/* 画像部分を3割に設定 */
+.article-img-p-img {
+    flex-basis: 23%; /* 親要素の幅の30%を占める */
+    max-width: 23%;  /* 幅が30%を超えないようにする */
+    height: 200px; /* 固定高さを設定（必要に応じて調整） */
+    background-color: #f2f2f2; /* 背景をグレーに設定 */
+    display: flex; /* 中央に配置するためにフレックスボックスを使用 */
+    align-items: center; /* 垂直方向に中央寄せ */
+    justify-content: center; /* 水平方向に中央寄せ */
+    overflow: hidden; /* 画像が親要素をはみ出さないようにする */
+}
+
+/* コンテンツ部分を7割に設定 */
+.article-content {
+    flex-basis: 77%;
+    /* 親要素の幅の70%を占める */
+    max-width: 77%;
+    /* 幅が70%を超えないようにする */
+    padding-left: 20px;
+    /* 画像との間に少しスペースを追加 */
+}
+
+.article-img-p-img img {
+    width: 100%; /* 親要素の幅に合わせて伸ばす */
+    height: 100%; /* 親要素の高さに合わせて伸ばす */
+    object-fit: contain; /* 縦横比を保ちながら、親要素にフィット */
 }
 
 .article-img,
