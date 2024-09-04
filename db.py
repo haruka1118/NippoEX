@@ -8,7 +8,7 @@ db = SqliteDatabase("articles.db")
 class db_ArticleHash(Model):
     url = CharField(unique=True)
     date_now = DateTimeField(default=datetime.datetime.now)
-    date_nippo = DateTimeField()
+    date_nippo = CharField()
     main_category = CharField()
     subcategory = CharField()
     title = CharField()
