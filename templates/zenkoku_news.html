@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <title>日報EX</title>
+</head>
+
+<body>
+    <nav class="header">
+        <div class="header-logo">
+            <a href="https://nippoex.onrender.com/">
+                <img src="../static/日報EX.png" alt="日報EX" width="auto" height="150px" class="header-logo-img">
+            </a>
+        </div>
+        <div class="header-menu">
+            <ul class="header-menu-list">
+                <li><a href="https://nippoex.onrender.com/">TOP</a></li>
+                <li><a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a></li>
+                <li><a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="section-article">
+        <div class="main-category">
+            {% for main_category, subcategories in zenkoku_news_articles.items() %}
+            <span class="span-main-category">{{ main_category }}</span>
+        </div>
+
+        <div class="sub-category">
+            {% for subcategory, articles in subcategories.items() %}
+            <span class="span-sub-category">{{ subcategory }}</span>
+        </div>
+
+        <div class="article">
+            {% for article in articles %}
+            <span class="article-title"><a href="{{ article.link }}">{{ article.title }}</a></span>
+            <span class="article-date">{{ article.date_nippo }}</span>
+            <div class="article-img-p">
+                <div class="article-img-p-img"><img src="{{ article.image }}" alt="{{ article.title }}"></div>
+                <p class="article-content">{{ article.content }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% endfor %}
+        {% endfor %}
+    </section>
+</body>
+
+</html>

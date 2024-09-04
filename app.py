@@ -211,6 +211,74 @@ def index():
     return render_template("index.html", all_articles=all_articles)
 
 
+@app.route("/kennai_news")
+def kennai_news():
+    kennai_news_articles = {}
+
+    for main_category, subcategories in urls.items():
+        if main_category == "県内ニュース":
+            kennai_news_articles[main_category] = {}
+            for subcategory, url in subcategories:
+                # データベースから記事を取得
+                articles = (
+                    db_ArticleHash.select()
+                    .where(db_ArticleHash.main_category == main_category)
+                    .where(db_ArticleHash.subcategory == subcategory)
+                    .order_by(db_ArticleHash.date_now.desc())
+                    .limit(5)
+                )
+
+                # データをリストに変換
+                article_list = [
+                    {
+                        "title": article.title,
+                        "link": article.url,
+                        "image": article.img,
+                        "content": article.content,
+                        "date_now": article.date_now.strftime("%Y-%m-%d %H:%M"),
+                        "date_nippo": article.date_nippo,
+                    }
+                    for article in articles
+                ]
+                kennai_news_articles[main_category][subcategory] = article_list
+
+    return render_template("kennai_news.html", kennai_news_articles=kennai_news_articles)
+
+
+@app.route("/zenkoku_news")
+def zenkoku_news():
+    zenkoku_news_articles = {}
+
+    for main_category, subcategories in urls.items():
+        if main_category == "全国ニュース":
+            zenkoku_news_articles[main_category] = {}
+            for subcategory, url in subcategories:
+                # データベースから記事を取得
+                articles = (
+                    db_ArticleHash.select()
+                    .where(db_ArticleHash.main_category == main_category)
+                    .where(db_ArticleHash.subcategory == subcategory)
+                    .order_by(db_ArticleHash.date_now.desc())
+                    .limit(5)
+                )
+
+                # データをリストに変換
+                article_list = [
+                    {
+                        "title": article.title,
+                        "link": article.url,
+                        "image": article.img,
+                        "content": article.content,
+                        "date_now": article.date_now.strftime("%Y-%m-%d %H:%M"),
+                        "date_nippo": article.date_nippo,
+                    }
+                    for article in articles
+                ]
+                zenkoku_news_articles[main_category][subcategory] = article_list
+
+    return render_template("zenkoku_news.html", zenkoku_news_articles=zenkoku_news_articles)
+
+
 @app.route("/download-db")
 def download_db():
     return send_file("articles.db", as_attachment=True)
