@@ -41,9 +41,9 @@
         <div class="article">
             {% for article in articles %}
             <span class="article-title"><a href="{{ article.link }}">{{ article.title }}</a></span>
-            <span class="article-date">{{ article.date_now }}</span>
+            <span class="article-date">{{ article.date_nippo }}</span>
             <div class="article-img-p">
-                <img src="{{ article.image }}" alt="{{ article.title }}">
+                <div class="article-img-p-img"><img src="{{ article.image }}" alt="{{ article.title }}"></div>
                 <p class="article-content">{{ article.content }}</p>
             </div>
             {% endfor %}
