@@ -211,7 +211,7 @@ def index():
     return render_template("index.html", all_articles=all_articles)
 
 
-@app.route("/kennai_news")
+@app.route("/kennai_news/")
 def kennai_news():
     kennai_news_articles = {}
 
@@ -245,7 +245,7 @@ def kennai_news():
     return render_template("kennai_news.html", kennai_news_articles=kennai_news_articles)
 
 
-@app.route("/zenkoku_news")
+@app.route("/zenkoku_news/")
 def zenkoku_news():
     zenkoku_news_articles = {}
 
