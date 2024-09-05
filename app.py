@@ -174,39 +174,36 @@ def scheduled_task():
 
 # スケジューラの設定
 scheduler = BackgroundScheduler()  # スケジューラーのインスタンスを作成
-scheduler.add_job(scheduled_task, "interval", minutes=3)  # スケジュールを設定
+scheduler.add_job(scheduled_task, "interval", minutes=15)  # スケジュールを設定
 scheduler.start()  # スケジューラーの開始
 
 
-@app.route("/")  # URLと以下のPython関数を結びつける
+@app.route("/")
 def index():
     all_articles = {}
 
     for main_category, subcategories in urls.items():
-        all_articles[main_category] = {}
-        for subcategory, url in subcategories:
-            # データベースから記事を取得
-            articles = (
-                db_ArticleHash.select()
-                .where(db_ArticleHash.main_category == main_category)
-                .where(db_ArticleHash.subcategory == subcategory)
-                .order_by(db_ArticleHash.date_now.desc())
-                .limit(5)
-            )
+        # データベースから記事を取得
+        articles = (
+            db_ArticleHash.select()
+            .where(db_ArticleHash.main_category == main_category)
+            .order_by(db_ArticleHash.date_now.desc())
+            .limit(5)
+        )
 
-            # データをリストに変換
-            article_list = [
-                {
-                    "title": article.title,
-                    "link": article.url,
-                    "image": article.img,
-                    "content": article.content,
-                    "date_now": article.date_now.strftime("%Y-%m-%d %H:%M"),
-                    "date_nippo": article.date_nippo,
-                }
-                for article in articles
-            ]
-            all_articles[main_category][subcategory] = article_list
+        # データをリストに変換
+        article_list = [
+            {
+                "title": article.title,
+                "link": article.url,
+                "image": article.img,
+                "content": article.content,
+                "date_now": article.date_now.strftime("%Y-%m-%d %H:%M"),
+                "date_nippo": article.date_nippo,
+            }
+            for article in articles
+        ]
+        all_articles[main_category] = article_list
 
     return render_template("index.html", all_articles=all_articles)
 

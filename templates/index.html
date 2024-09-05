@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/index.css">
     <title>日報EX</title>
 </head>
 
@@ -27,30 +28,45 @@
         </div>
     </nav>
 
-    <section class="section-article">
-        <div class="main-category">
-            {% for main_category, subcategories in all_articles.items() %}
-            <span class="span-main-category">{{ main_category }}</span>
-        </div>
-
-        <div class="sub-category">
-            {% for subcategory, articles in subcategories.items() %}
-            <span class="span-sub-category">{{ subcategory }}</span>
-        </div>
-
-        <div class="article">
-            {% for article in articles %}
-            <span class="article-title"><a href="{{ article.link }}">{{ article.title }}</a></span>
-            <span class="article-date">{{ article.date_nippo }}</span>
-            <div class="article-img-p">
-                <div class="article-img-p-img"><img src="{{ article.image }}" alt="{{ article.title }}"></div>
-                <p class="article-content">{{ article.content }}</p>
-            </div>
-            {% endfor %}
-        </div>
-
+    <section class="latest-news">
+        {% for main_category, articles in all_articles.items() %}
+        <section class="news-category">
+            <h2>{{ main_category }}</h2>
+            <ul class="grid grid-col-1">
+                {% if articles %}
+                <li class="grid-item">
+                    <dl class="article">
+                        <dt class="article-title">{{ articles[0].title }}</dt>
+                        <dd class="article-img">
+                            <img src="{{ articles[0].image }}" alt="{{ articles[0].title }}">
+                        </dd>
+                        <dd class="article-content">
+                            {{ articles[0].content.split('\n', 1)[0] }}…
+                        </dd>
+                        <dd class="article-date">{{ articles[0].date_now }}</dd>
+                    </dl>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="grid grid-col-2">
+                {% for article in articles[1:5] %}
+                <li class="grid-item">
+                    <dl class="article">
+                        <dt class="article-title">{{ article.title }}</dt>
+                        <dd class="article-img">
+                            <img src="{{ article.image }}" alt="{{ article.title }}">
+                        </dd>
+                        <dd class="article-content">
+                            {{ article.content.split('\n', 1)[0] }}…
+                        </dd>
+                        <dd class="article-date">{{ article.date_now }}</dd>
+                    </dl>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
         {% endfor %}
-        {% endfor %}
+
     </section>
 </body>
 

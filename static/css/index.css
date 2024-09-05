@@ -1,0 +1,22 @@
+@charset "utf=8";
+
+.latest-news {
+    padding: 120px 20px 20px 20px;
+}
+
+h2 {
+    margin: -20px 0 0 0;
+}
+
+.grid {
+    display: grid;
+    gap: 20px;
+}
+
+.grid-col-1 {
+    grid-template-columns: 1fr;
+}
+
+.grid-col-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
