@@ -20,18 +20,15 @@
         </div>
         <div class="header-menu">
             <ul class="header-menu-list">
-                <li><a href="https://nippoex.onrender.com/">TOP</a></li>
-                <li><a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a></li>
-                <li><a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a></li>
+                <li class="header-manu-link"><a href="https://nippoex.onrender.com/">TOP</a></li>
+                <li class="header-manu-link"><a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a></li>
+                <li class="header-manu-link header-manu-link-on"><a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a></li>
             </ul>
         </div>
     </nav>
 
     <section class="section-article">
-        <div class="main-category">
-            {% for main_category, subcategories in zenkoku_news_articles.items() %}
-            <span class="span-main-category">{{ main_category }}</span>
-        </div>
+        {% for main_category, subcategories in zenkoku_news_articles.items() %}
 
         <div class="sub-category">
             {% for subcategory, articles in subcategories.items() %}
