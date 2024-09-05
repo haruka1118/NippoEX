@@ -114,7 +114,7 @@ def get_and_hash_combined_parts(url):
 def check_for_updates(articles):
     new_articles = []
 
-    for article in articles:
+    for article in reversed(articles):
         current_hash = article["hash"]
 
         # データベース内のハッシュ値を比較
@@ -174,7 +174,7 @@ def scheduled_task():
 
 # スケジューラの設定
 scheduler = BackgroundScheduler()  # スケジューラーのインスタンスを作成
-scheduler.add_job(scheduled_task, "interval", minutes=15)  # スケジュールを設定
+scheduler.add_job(scheduled_task, "interval", minutes=1)  # スケジュールを設定
 scheduler.start()  # スケジューラーの開始
 
 
