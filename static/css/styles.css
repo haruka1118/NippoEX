@@ -52,8 +52,8 @@ body {
 }
 
 .header-manu-link {
-    padding: 40px 10px;
-    width: 120px;
+    padding: 0;
+    width: 140px;
     text-align: center;
     transition: background-color .25s;
 }
