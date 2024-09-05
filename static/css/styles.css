@@ -39,14 +39,27 @@ body {
 
 
 .header-manu-link>a {
+    display: block;
     text-decoration: none;
     color: #333;
+    padding: 40px 10px;
+    transition: color .25s, font-weight .25s;
+}
+
+.header-manu-link>a:hover {
+    color:white;
+    font-weight: 500;
 }
 
 .header-manu-link {
     padding: 40px 10px;
-    width: 100px;
+    width: 120px;
     text-align: center;
+    transition: background-color .25s;
+}
+
+.header-manu-link:hover {
+    background-color: #4cb8ceb6;
 }
 
 .header-manu-link-on {
