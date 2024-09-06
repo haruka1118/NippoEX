@@ -59,8 +59,8 @@ def fetch_articles(url, main_category, subcategory):
         full_link = link if link.startswith("http") else f"https://www.iwate-np.co.jp{link}"
 
         # 画像の取得
-        img_tag = article.find("img", class_="lazyload")
-        img = img_tag.get("data-src")
+        img_tag = article.find("a", class_="article-list-anchor")
+        img = img_tag.get("data-picture-src")
 
         # 日付の取得
         date_tag = article.find("span", class_="date")
