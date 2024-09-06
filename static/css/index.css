@@ -4,20 +4,29 @@
     padding: 80px 0 0 0;
 }
 
+dd,
+dl,
+dt {
+    margin: 0;
+}
+
+
 .grid {
     display: grid;
 }
 
-.grid-item {
-    border-bottom: 1px solid #f2f2f2;
-}
+
 
 /* grid-col-1 */
+.grid-item {
+    border-bottom: 2.5px solid #f2f2f2;
+}
+
 .div-grid-col-1 {
     display: flex;
     align-items: start;
     height: 230px;
-    padding: 10px 0;
+    padding: 10px 0 20px 0;
 }
 
 .ul-grid-col-1 {
@@ -26,23 +35,6 @@
     padding: 0;
 }
 
-
-.grid-col-2 {
-    grid-template-columns: 1fr 1fr;
-}
-
-.grid-col-2 {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-
-dd,
-dl,
-dt {
-    margin: 0;
-}
 
 .index-article-img {
     flex: 1;
@@ -69,7 +61,7 @@ dt {
 }
 
 .col-1-index-article-title {
-    font-size: 1.7em;
+    font-size: 1.5em;
     font-weight: 500;
     padding: 10px 0;
 }
@@ -85,12 +77,26 @@ dt {
 }
 
 /* grid-col-2 */
-.col-2-index-article-title {
-    font-size: 1.3em;
-    font-weight: 500;
-    padding: 10px 0;
+.div-grid-col-2 {
+    display: flex;
+    align-items: start;
+    height: 150px;
+    padding: 10px 0 20px 0;
+
 }
 
+.col-2-grid-item {
+    border-bottom: 2.5px solid #f2f2f2;
+
+}
+
+.grid-col-2 {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+}
 
 .col-2-index-article-img {
     flex: 1;
@@ -98,11 +104,66 @@ dt {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     background-color: #f2f2f2;
     box-sizing: border-box;
     margin-right: 10px;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
+.col-2-index-article-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+.col-2-index-article-title-date {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+}
+
+.col-2-index-article-title {
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.col-2-index-article-date {
+    text-align: end;
+    color: #999;
+    font-weight: 300;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* ホバー */
+
+.col-1-index-article-title>a,
+.col-2-index-article-title>a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.2em;
+    font-weight: 550;
+    background-image: linear-gradient(#4295a6, #4295a6);
+    background-size: 0 1px;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    transition: all 1.0s ease-out;
+}
+
+
+.col-1-index-article-title>a:hover,
+.col-2-index-article-title>a:hover {
+    background-size: 100% 1px;
+    color: #4295a6;
 }
