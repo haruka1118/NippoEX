@@ -60,7 +60,7 @@ def fetch_articles(url, main_category, subcategory):
 
         # 画像の取得
         img_tag = article.find("a", class_="article-list-anchor")
-        img = img_tag.get("data-picture-src")
+        img = img_tag.get("data-picture-src") or img_tag.get("data-src") or img_tag.get("data-srcset")
 
         # 日付の取得
         date_tag = article.find("span", class_="date")
