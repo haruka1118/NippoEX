@@ -114,7 +114,7 @@ def get_and_hash_combined_parts(url):
 def check_for_updates(articles):
     new_articles = []
 
-    for article in reversed(articles):
+    for article in articles(articles):
         current_hash = article["hash"]
 
         # データベース内のハッシュ値を比較
