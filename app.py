@@ -153,6 +153,7 @@ def check_for_updates(articles):
 
 def scheduled_task():
     updated_articles = []
+    link_nippo = "https://nippoex.onrender.com/"
 
     for main_category, subcategories in urls.items():  # urls.pyから「main_category」定義
         for subcategory, url in subcategories:  # urls.pyから「subcategory, url」定義
@@ -167,7 +168,7 @@ def scheduled_task():
         content = article["content"]
         date_nippo = article["date_nippo"]
 
-        message = f"{date_nippo}【{article['main_category']}】({article['subcategory']})\n◆{title}\n\n{content}\n\n記事全文>>{link}"
+        message = f"{date_nippo}【{article['main_category']}】({article['subcategory']})\n◆{title}\n\n{content}\n\n◆記事全文>>{link}\n◆日報EX>>{link_nippo}"
 
         send_line_notify(message, image)
 
