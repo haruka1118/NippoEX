@@ -54,7 +54,7 @@
                                 <dt class="col-1-index-article-title"><a href="{{ articles[0].link}}">{{ articles[0].title }}</a></dt>
 
                                 <dd class="index-article-content">
-                                    {{ articles[0].content.split('\n', 1)[0] }}…
+                                    {{ articles[0].content[:104] }}…
                                 </dd>
                                 <dd class="index-article-date">{{ articles[0].date_nippo }}</dd>
                             </div>
