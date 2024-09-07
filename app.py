@@ -36,7 +36,7 @@ def fetch_articles(url, main_category, subcategory):
         ads = soup.select("aside.side, .news-box")
         for ad in ads:
             ad.decompose()
-        articles = soup.select("ul.article-list li")
+        articles = list(reversed(soup.select("ul.article-list li")))
     else:
         # 県内ニュース(広告除外)
         ads = soup.select("aside.side, .news-box")
@@ -114,7 +114,7 @@ def get_and_hash_combined_parts(url):
 def check_for_updates(articles):
     new_articles = []
 
-    for article in articles:
+    for article in reversed(articles):
         current_hash = article["hash"]
 
         # データベース内のハッシュ値を比較
