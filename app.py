@@ -183,7 +183,7 @@ scheduler.start()  # スケジューラーの開始
 def index():
     all_articles = {}
 
-    for main_category in urls.items():
+    for main_category, subcategories in urls.items():
         # データベースから記事を取得
         articles = (
             db_ArticleHash.select()
