@@ -59,13 +59,13 @@ def fetch_articles(url, main_category, subcategory):
         ads = soup.select("aside.side, .news-box")
         for ad in ads:
             ad.decompose()
-        articles = list(reversed(soup.select("ul.article-list li")))
+        articles = (soup.select("ul.article-list li"))
     else:
         # 県内ニュース(広告除外)
         ads = soup.select("aside.side, .news-box")
         for ad in ads:
             ad.decompose()
-        articles = list(reversed(soup.select("div.article-list-right-box ul.article-list li.item"))) #訂正
+        articles = (soup.select("div.article-list-right-box ul.article-list li.item"))
 
     article_list = []
     for article in articles:
