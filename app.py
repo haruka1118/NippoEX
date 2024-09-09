@@ -141,7 +141,6 @@ def check_for_updates(articles):
                     db_ArticleHash.title: article["title"],
                     db_ArticleHash.content: article["content"],
                     db_ArticleHash.img: article["image"],
-                    # db_ArticleHash.date_now: datetime.datetime.now(),
                     db_ArticleHash.date_nippo: article["date_nippo"],
                     db_ArticleHash.main_category: article["main_category"],
                     db_ArticleHash.subcategory: article["subcategory"],
