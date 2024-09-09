@@ -26,6 +26,29 @@ def fetch_article_content(article_url):
     return "本文を取得できませんでした。"
 
 
+def get_and_hash_combined_parts(url):
+    # URLを'/'で分割してリストにする
+    url_parts = url.rstrip("/").split("/")
+
+    # ハッシュ化する部分を格納するリスト
+    parts_to_hash = []
+
+    # URLが十分に長いか確認
+    if len(url_parts) >= 4:
+        # 最後から4番目、3番目、2番目、1番目の部分を取り出す
+        for i in range(4, 0, -1):
+            if len(url_parts) >= i:
+                parts_to_hash.append(url_parts[-i])
+
+    # 取得した部分をひとつにまとめる
+    combined_parts = "/".join(parts_to_hash)
+
+    # ひとつにまとめた部分をハッシュ化する
+    hash_value = hashlib.md5(combined_parts.encode("utf-8")).hexdigest()
+
+    return combined_parts, hash_value
+
+
 # 2)中カテゴリページ(url)から情報を取得
 def fetch_articles(url, main_category, subcategory):
     response = requests.get(url)
@@ -86,29 +109,6 @@ def fetch_articles(url, main_category, subcategory):
         )
 
     return article_list
-
-
-def get_and_hash_combined_parts(url):
-    # URLを'/'で分割してリストにする
-    url_parts = url.rstrip("/").split("/")
-
-    # ハッシュ化する部分を格納するリスト
-    parts_to_hash = []
-
-    # URLが十分に長いか確認
-    if len(url_parts) >= 4:
-        # 最後から4番目、3番目、2番目、1番目の部分を取り出す
-        for i in range(4, 0, -1):
-            if len(url_parts) >= i:
-                parts_to_hash.append(url_parts[-i])
-
-    # 取得した部分をひとつにまとめる
-    combined_parts = "/".join(parts_to_hash)
-
-    # ひとつにまとめた部分をハッシュ化する
-    hash_value = hashlib.md5(combined_parts.encode("utf-8")).hexdigest()
-
-    return combined_parts, hash_value
 
 
 def check_for_updates(articles):
