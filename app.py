@@ -65,7 +65,7 @@ def fetch_articles(url, main_category, subcategory):
         ads = soup.select("aside.side, .news-box")
         for ad in ads:
             ad.decompose()
-        articles = soup.select("div.article-list-right-box ul.article-list li.item")
+        articles = list(reversed(soup.select("div.article-list-right-box ul.article-list li.item"))) #訂正
 
     article_list = []
     for article in articles:
