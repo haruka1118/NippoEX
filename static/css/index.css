@@ -11,12 +11,10 @@ dt {
 /* ヘッダー以外 */
 
 /* タブレット用 */
-@media screen and (max-width: 959px) {
-}
+@media screen and (max-width: 959px) {}
 
 /* スマホ用 */
-@media screen and (max-width: 480px) {
-}
+@media screen and (max-width: 480px) {}
 
 
 .grid {
@@ -65,13 +63,14 @@ dt {
 }
 
 .index-article-content-date {
-    width: 50%;
+    flex: 1;
 }
 
 .col-1-index-article-title {
-    font-size: 1.5em;
+    font-size: 1.7em;
     font-weight: 500;
     padding: 10px 0;
+    line-height: 1.3em;
 }
 
 .index-article-content {
@@ -136,10 +135,11 @@ dt {
 }
 
 .col-2-index-article-title {
-    font-size: 1.1em;
+    font-size: 1.3em;
     font-weight: 500;
     padding: 10px 0;
     width: 100%;
+    line-height: 1.3em;
 }
 
 .col-2-index-article-date {
@@ -160,7 +160,6 @@ a {
 .col-2-index-article-title>a {
     text-decoration: none;
     color: #333;
-    font-size: 1.2em;
     font-weight: 550;
     background-image: linear-gradient(#4295a6, #4295a6);
     background-size: 0 1px;
@@ -174,4 +173,77 @@ a {
 .col-2-index-article-title>a:hover {
     background-size: 100% 1px;
     color: #4295a6;
+}
+
+/* タブレット用 */
+@media screen and (max-width: 959px) {}
+
+/* スマホ用 */
+@media screen and (max-width: 480px) {
+    .div-grid-col-1 {
+        padding: 10px 0;
+    }
+
+    .ul-grid-col-1 {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .index-article-img {
+        flex: 1;
+    }
+
+    .index-article-content-date {
+        flex: 2;
+    }
+
+    .col-1-index-article-title {
+        font-size: 1em;
+        font-weight: 500;
+        padding: 10px 0;
+        line-height: 1.3em;
+    }
+
+    .index-article-content {
+        font-size: 0.9em;
+        padding-bottom: 0;
+    }
+
+    .index-article-date {
+        font-size: 0.8em;
+        padding-bottom: 5px;
+    }
+
+    /* grid-col-2 */
+    .div-grid-col-2 {
+        padding: 10px 0;
+        height: 100px;
+    }
+
+    .grid-col-2 {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 0;
+    }
+
+    .col-2-index-article-img {
+        flex: 1;
+    }
+
+    .col-2-index-article-title-date {
+        flex: 2;
+    }
+
+    .col-2-index-article-title {
+        font-size: 1.0em;
+    }
+
+    .col-2-index-article-date {
+        font-size: 0.8em;
+        padding-bottom: 5px;
+    }
+
+
 }
