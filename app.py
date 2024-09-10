@@ -81,9 +81,9 @@ def fetch_articles(url, main_category, subcategory):
         link = link_tag.get("href", "#")
         full_link = link if link.startswith("http") else f"https://www.iwate-np.co.jp{link}"
 
-        if full_link and "https://www.iwate-np.co.jp/page/mlb" in full_link:  # full_linkがNoneでないことを確認
-            print(f"Skipping MLB page: {full_link}")  # デバッグ用
-            continue  # MLBページの場合、この反復をスキップ
+        if full_link and "https://www.iwate-np.co.jp/page/mlb" in full_link:
+            print(f"Skipping MLB page: {full_link}")
+            continue  # MLBページの場合スキップ
 
         # 画像の取得
         img_tag = article.find("a", class_="article-list-anchor")
@@ -168,7 +168,7 @@ def scheduled_task():
 # スケジューラの設定
 scheduler = BackgroundScheduler()  # スケジューラーのインスタンスを作成
 scheduler.add_job(scheduled_task, "interval", minutes=1)  # スケジュールを設定
-# scheduler.start()  # スケジューラーの開始
+scheduler.start()  # スケジューラーの開始
 
 
 @app.route("/")
