@@ -3,15 +3,27 @@
 body {
     font-family: "Noto sans JP", "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.6em;
     color: #333;
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
+}
+
+/* タブレット用 */
+@media screen and (max-width: 959px) {}
+
+/* スマホ用 */
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 16px;
+        line-height: 1.5em;
+    }
 
 }
 
 /* header */
+
 .header {
     width: 100%;
     left: 50%;
@@ -84,10 +96,39 @@ body {
     font-weight: 500;
 }
 
-.news-category {
-    width: 60%;
-    margin: 0 auto;
 
+/* タブレット用 */
+@media screen and (max-width: 959px) {
+    .header {
+        height: 70px;
+        overflow: hidden;
+    }
+}
+
+/* スマホ用 */
+@media screen and (max-width: 480px) {
+    .header {
+        height: 50px;
+        overflow: hidden;
+    }
+
+    .header-logo-menu {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+
+    .header-menu-list {
+        display: none;
+    }
+
+    .news-category {
+        width: 60%;
+        margin: 0 auto;
+    }
 }
 
 /* article section */
