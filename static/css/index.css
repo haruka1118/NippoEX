@@ -6,30 +6,16 @@ dt {
     margin: 0;
 }
 
-.news-category {
-    width: 60%;
-    margin: 0 auto;
-
-}
 
 
 /* ヘッダー以外 */
-.latest-news {
-    padding: 80px 0 0 0;
-}
 
 /* タブレット用 */
 @media screen and (max-width: 959px) {
-    .latest-news {
-        padding: 70px 0 0 0;
-    }
 }
 
 /* スマホ用 */
 @media screen and (max-width: 480px) {
-    .latest-news {
-        padding: 50px 0 0 0;
-    }
 }
 
 
