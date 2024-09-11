@@ -46,7 +46,7 @@
         <div class="burger-menu-kennai"><a href="https://nippoex.onrender.com/kennai_news/" ontouchstart>県内ニュース</a></div>
         <div class="burger-menu-zenkoku"><a href="https://nippoex.onrender.com/zenkoku_news/" ontouchstart>全国ニュース</a></div>
     </div>
-    
+
     <section class="section-article">
         {% for main_category, articles in all_articles.items() %}
         <span class="span-sub-category"> 最新の{{ main_category }}</span>
@@ -96,6 +96,18 @@
     <footer class="footer">
         <p>&copy; 2024 日報EX. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const burger = document.querySelector('.burger');
+            const burgerMenu = document.querySelector('.burger-menu');
+
+            burger.addEventListener('click', function () {
+                burgerMenu.classList.toggle('active');
+            });
+        });
+    </script>
+
 </body>
 
 </html>

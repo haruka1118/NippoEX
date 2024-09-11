@@ -201,8 +201,8 @@ body {
         display: block;
     }
 
-    .burger-menu {
-    display: block;
+    .burger-menu.active {
+        display: block;
     }
 }
 
