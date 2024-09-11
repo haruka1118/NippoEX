@@ -14,7 +14,7 @@ class db_ArticleHash(Model):
     title = CharField()
     img = CharField()
     content = TextField()
-    hash = CharField()
+    hash = CharField(unique=True)
 
     class Meta:
         database = db
@@ -22,6 +22,4 @@ class db_ArticleHash(Model):
 
 # データベースとテーブルの作成
 db.connect()
-db.create_tables([db_ArticleHash])
-
-
+db.create_tables([db_ArticleHash], safe=True)

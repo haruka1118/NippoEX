@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from db import db_ArticleHash
 from flask import Flask, render_template, send_file
 from line_notify import send_line_notify
+from peewee import IntegrityError
 from urls import urls
 
 
@@ -128,17 +129,20 @@ def check_for_updates(articles):
             new_articles.append(article)
 
             # 新しいハッシュ値をデータベースに保存
-            db_ArticleHash.insert(
-                url=article["link"],
-                hash=current_hash,
-                title=article["title"],
-                content=article["content"],
-                img=article["image"],
-                date_now=datetime.datetime.now(),
-                date_nippo=article["date_nippo"],
-                main_category=article["main_category"],
-                subcategory=article["subcategory"],
-            ).execute()
+            try:
+                db_ArticleHash.create(
+                    url=article["link"],
+                    hash=article["hash"],
+                    title=article["title"],
+                    content=article["content"],
+                    img=article["image"],
+                    date_now=datetime.datetime.now(),
+                    date_nippo=article["date_nippo"],
+                    main_category=article["main_category"],
+                    subcategory=article["subcategory"],
+                )
+            except IntegrityError:
+                print(f"Article with hash {article['hash']} already exists in the database.")
 
     return new_articles
 
