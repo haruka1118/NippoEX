@@ -11,10 +11,10 @@ body {
 }
 
 /* タブレット用 */
-@media screen and (max-width: 959px) {}
+@media screen and (max-width: 1024px) {}
 
 /* スマホ用 */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     body {
         font-size: 16px;
         line-height: 1.5em;
@@ -98,7 +98,7 @@ body {
 
 
 /* タブレット用 */
-@media screen and (max-width: 959px) {
+@media screen and (max-width: 1024px) {
     .header {
         height: 70px;
         overflow: hidden;
@@ -106,7 +106,7 @@ body {
 }
 
 /* スマホ用 */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .header {
         height: 50px;
         overflow: hidden;
@@ -226,10 +226,10 @@ body {
 }
 
 /* タブレット用 */
-@media screen and (max-width: 959px) {}
+@media screen and (max-width: 1024px) {}
 
 /* スマホ用 */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .section-article {
         display: block;
         padding: 50px 5px 0;
@@ -334,10 +334,10 @@ body {
 
 
 /* タブレット用 */
-@media screen and (max-width: 959px) {}
+@media screen and (max-width: 1024px) {}
 
 /* スマホ用 */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .footer p {
         font-size: 0.9em;
         margin: 0;
