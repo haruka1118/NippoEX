@@ -167,7 +167,7 @@ def scheduled_task():
 
 # スケジューラの設定
 scheduler = BackgroundScheduler()  # スケジューラーのインスタンスを作成
-scheduler.add_job(scheduled_task, "interval", minutes=1)  # スケジュールを設定
+scheduler.add_job(scheduled_task, "interval", minutes=5)  # スケジュールを設定
 scheduler.start()  # スケジューラーの開始
 
 
