@@ -5,7 +5,6 @@ body {
     font-size: 16px;
     line-height: 1.6em;
     color: #333;
-    flex-direction: column;
     width: 100%;
     margin: 0 auto;
 }
@@ -26,19 +25,13 @@ body {
 
 .header {
     width: 100%;
-    left: 50%;
-    transform: translate(-50%);
-    box-sizing: border-box;
-    padding: 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     position: fixed;
     z-index: 10;
     background-color: white;
     top: 0;
     height: 80px;
-    overflow: hidden;
 }
 
 .header-logo-menu {
@@ -48,6 +41,13 @@ body {
     align-items: center;
     margin: 0 auto;
 }
+
+.header-logo-img {
+    height: 80px;
+    width: 150px;
+    object-fit: cover;
+}
+
 
 
 .header-menu-list {
@@ -61,11 +61,14 @@ body {
 
 
 .header-manu-link>a {
-    display: block;
     text-decoration: none;
     color: #333;
-    padding: 40px 10px;
     transition: color .25s, font-weight .25s;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -81,6 +84,10 @@ body {
     width: 140px;
     text-align: center;
     transition: background-color .25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
 }
 
 .header-manu-link:hover {
@@ -109,7 +116,6 @@ body {
 @media screen and (max-width: 768px) {
     .header {
         height: 50px;
-        overflow: hidden;
     }
 
     .header-logo-menu {
@@ -118,19 +124,90 @@ body {
         justify-content: space-between;
         align-items: center;
         margin: 0 auto;
-        justify-content: flex-start;
     }
 
 
+
+    .header-logo-img {
+        height: 50px;
+        width: 100px;
+        object-fit: cover;
+    }
+
+}
+
+.dummy-articles {
+    width: 60%;
+    height: 100vh;
+    background-color: lightblue;
+    margin: 0 auto;
+}
+
+.burger {
+    cursor: pointer;
+    display: none;
+    padding: 0 10px 0 0;
+}
+
+.burger div {
+    width: 25px;
+    height: 1.5px;
+    background-color: #333;
+    margin: 6px;
+}
+
+.burger-menu {
+    height: 240px;
+    width: 100vw;
+    top: 50px;
+    position: fixed;
+    text-align: center;
+    display: none;
+    z-index: 10;
+}
+
+.burger-menu>div {
+    height: 33%;
+}
+
+.burger-menu>div>a {
+    color: white;
+    font-weight: 350;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: #4cb8cee9;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger-menu>div>a:active {
+    background-color: #398e9fe8;
+}
+
+/* ハンバーガー */
+/* タブレット用 */
+@media screen and (max-width: 1024px) {}
+
+/* スマホ用 */
+@media screen and (max-width: 768px) {
     .header-menu-list {
         display: none;
     }
 
-    .header-logo-img {
-        height: 110px;
+    .burger {
+        display: block;
     }
 
+    .burger-menu {
+    display: block;
+    }
 }
+
+
+
 
 /* article section */
 .section-article {
@@ -139,6 +216,7 @@ body {
     margin: 0 auto;
     width: 60%;
     box-sizing: border-box;
+    position: relative;
 }
 
 

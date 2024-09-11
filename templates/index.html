@@ -33,10 +33,20 @@
                     <li class="header-manu-link"><a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a></li>
                     <li class="header-manu-link"><a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a></li>
                 </ul>
+                <div class="burger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
             </div>
         </div>
     </nav>
-
+    <div class="burger-menu">
+        <div class="burger-menu-top"><a href="https://nippoex.onrender.com/" ontouchstart>TOP</a></div>
+        <div class="burger-menu-kennai"><a href="https://nippoex.onrender.com/kennai_news/" ontouchstart>県内ニュース</a></div>
+        <div class="burger-menu-zenkoku"><a href="https://nippoex.onrender.com/zenkoku_news/" ontouchstart>全国ニュース</a></div>
+    </div>
+    
     <section class="section-article">
         {% for main_category, articles in all_articles.items() %}
         <span class="span-sub-category"> 最新の{{ main_category }}</span>
