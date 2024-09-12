@@ -33,7 +33,7 @@
                     <li class="header-manu-link"><a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a></li>
                     <li class="header-manu-link"><a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a></li>
                 </ul>
-                <div class="burger">
+                <div class="burger" onclick="toggleBurgerMenu()">
                     <div class="line1"></div>
                     <div class="line2"></div>
                     <div class="line3"></div>
@@ -106,6 +106,12 @@
                 burgerMenu.classList.toggle('active');
             });
         });
+
+        function toggleBurgerMenu() {
+            const burger = document.querySelector('.burger');
+            burger.classList.toggle('active');
+        }
+
     </script>
 
 </body>

@@ -32,9 +32,22 @@
                     <li class="header-manu-link header-manu-link-on"><a href="https://nippoex.onrender.com/kennai_news/">県内ニュース</a></li>
                     <li class="header-manu-link"><a href="https://nippoex.onrender.com/zenkoku_news/">全国ニュース</a></li>
                 </ul>
+                <div class="burger" onclick="toggleBurgerMenu()">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+
             </div>
         </div>
     </nav>
+
+    <div class="burger-menu">
+        <div class="burger-menu-top"><a href="https://nippoex.onrender.com/" ontouchstart>TOP</a></div>
+        <div class="burger-menu-kennai"><a href="https://nippoex.onrender.com/kennai_news/" ontouchstart>県内ニュース</a></div>
+        <div class="burger-menu-zenkoku"><a href="https://nippoex.onrender.com/zenkoku_news/" ontouchstart>全国ニュース</a></div>
+    </div>
+
 
     <section class="section-article">
         {% for main_category, subcategories in kennai_news_articles.items() %}
@@ -60,6 +73,22 @@
     <footer class="footer">
         <p>&copy; 2024 日報EX. All rights reserved.</p>
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const burger = document.querySelector('.burger');
+            const burgerMenu = document.querySelector('.burger-menu');
+
+            burger.addEventListener('click', function () {
+                burgerMenu.classList.toggle('active');
+            });
+        });
+
+        function toggleBurgerMenu() {
+            const burger = document.querySelector('.burger');
+            burger.classList.toggle('active');
+        }
+
+    </script>
 
 </body>
 
